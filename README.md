@@ -1,6 +1,6 @@
 # Sample Kubernetes configurations for ACS deployment
 
-This repo includes the following configurations:
+This repo includes the following configurations which defines the same deployment &amp; service as in the [Azure Container Service Documentation](https://docs.microsoft.com/en-us/azure/container-service/container-service-kubernetes-walkthrough)
 
 * `separated-config`
 
