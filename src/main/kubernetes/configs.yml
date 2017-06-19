@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: List
+items:
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: sample-acs-k8s-service
+    labels:
+      app: sample-acs-k8s
+  spec:
+    type: LoadBalancer
+    selector:
+      app: sample-acs-k8s
+    ports:
+      - port: 80
+        targetPort: 8080
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    name: sample-acs-k8s-deployment
+  spec:
+    replicas: 1
+    template:
+      metadata:
+        labels:
+          app: sample-acs-k8s
+      spec:
+        containers:
+        - name: sample-acs-k8s-container
+          image: $USERNAME/sample-acs-k8s:$BUILD_NUMBER
+          ports:
+          - containerPort: 8080

@@ -19,8 +19,6 @@
 
     <properties>
         <java.version>1.7</java.version>
-
-        <docker.image.prefix>menxiao</docker.image.prefix>
     </properties>
 
     <dependencies>
@@ -46,7 +44,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>copy-resources</id>
+                        <id>copy-docker-resources</id>
                         <phase>package</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -63,6 +61,22 @@
                                     <includes>
                                         <include>${project.build.finalName}.${project.packaging}</include>
                                     </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-kubernetes-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/kubernetes</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/kubernetes</directory>
+                                    <filtering>true</filtering>
                                 </resource>
                             </resources>
                         </configuration>
