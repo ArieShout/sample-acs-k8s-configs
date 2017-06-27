@@ -1,0 +1,28 @@
+{
+  "id": "demo-app-on-80",
+  "cmd": null,
+  "cpus": 1,
+  "mem": 512,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "$USERNAME/sample-acs-k8s:$BUILD_NUMBER",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 80,
+          "protocol": "tcp",
+          "name": "80",
+          "labels": null
+        }
+      ]
+    },
+    "type": "DOCKER"
+  },
+  "acceptedResourceRoles": [
+    "slave_public"
+  ]
+}
+
