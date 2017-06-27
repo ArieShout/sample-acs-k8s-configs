@@ -11,6 +11,6 @@ public class ApplicationTest {
     @Test
     public void testHome() {
         String msg = new Application().home();
-        assertEquals("Hello, Azure Container Service with Kubernetes", msg);
+        assertEquals("Hello, Azure Container Service!", msg);
     }
 }

@@ -7,7 +7,7 @@
   "instances": 1,
   "container": {
     "docker": {
-      "image": "$USERNAME/sample-acs-k8s:$BUILD_NUMBER",
+      "image": "$USERNAME/sample-acs:$BUILD_NUMBER",
       "network": "BRIDGE",
       "portMappings": [
         {

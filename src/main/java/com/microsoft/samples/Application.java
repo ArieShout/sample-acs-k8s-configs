@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class Application {
     @RequestMapping("/")
     public String home() {
-        return "Hello, Azure Container Service with Kubernetes";
+        return "Hello, Azure Container Service!";
     }
 
     public static void main(String[] args) {
