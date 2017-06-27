@@ -1,5 +1,5 @@
 {
-  "id": "demo-app-on-80",
+  "id": "demo-app-on-8089",
   "cmd": null,
   "cpus": 1,
   "mem": 32,
@@ -12,7 +12,7 @@
       "portMappings": [
         {
           "containerPort": 80,
-          "hostPort": 80,
+          "hostPort": 8089,
           "protocol": "tcp",
           "name": "80",
           "labels": null
