@@ -29,10 +29,10 @@ deployed to the cluster, we need to build a Docker image based on the output.
 The `Dockerfile` in `src/main/docker` contains the image configuration. It copies the fat JAR and runs the main class
 in that JAR. All the required resources will be copied to `target/docker`. We can use 
 [CloudBees Docker Build and Publish plugin](https://wiki.jenkins-ci.org/display/JENKINS/CloudBees+Docker+Build+and+Publish+plugin), 
-or any other similar Jenkins plugin to build the docker image creation and push it to an repository.
+or any other similar Jenkins plugin to build the docker image and push it to a repository.
 
-Note that the pushed image name should be the same with that in the Kubernetes / Marathon configuration so that the
-later deployment can pick up the correct image.
+Note that in order to use the latest image built in this step, we must make sure the image name set in the Docker build
+step is the same as that in the Kubernetes / Marathon configuration.
 
 ## 3. Deploy the Configurations to ACS
 
@@ -56,9 +56,11 @@ configuration details:
    * Kubernetes: `target/kubernetes/*.yml`
    * DC/OS Marathon: `target/marathon/*.json`
 * **Enable Variable Substitution in Config**: This allows substitution of variables (in `$VARIABLE` or `${VARIABLE}`
-   format) with the corresponding environment variable values. In a continuous build environment, we may generate some
-   images with dynamic tags (e.g., the `$BUILD_NUMBER` as used in this project). The substitution allows us to generate
-    the actual configuration dynamically and use the image with the correct tag.
+   format) with the corresponding environment variable values.
+
+   In a continuous build environment, we may generate some images with dynamic tags (e.g., the `$BUILD_NUMBER` as 
+   used in this project). The substitution allows us to generate the actual configuration dynamically and use the image
+   with the correct tag.
 
 ## Bare Configurations
 
