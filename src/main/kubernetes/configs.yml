@@ -28,6 +28,8 @@ items:
       spec:
         containers:
         - name: sample-acs-k8s-container
-          image: $USERNAME/sample-acs-k8s:$BUILD_NUMBER
+          image: menxiaoacrsea.azurecr.io/sample-acs-k8s:$BUILD_NUMBER
           ports:
           - containerPort: 8080
+        imagePullSecrets:
+        - name: $KUBERNETES_SECRET_NAME

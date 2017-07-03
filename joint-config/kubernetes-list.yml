@@ -28,6 +28,8 @@ items:
       spec:
         containers:
         - name: nginx
-          image: nginx
+          image: menxiaoacrsea.azurecr.io/nginx
           ports:
           - containerPort: 80
+        imagePullSecrets:
+        - name: test-multiple-registry-key
