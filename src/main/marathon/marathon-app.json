@@ -25,7 +25,7 @@
     "slave_public"
   ],
   "uris": [
-    "file:///mnt/share/dcosshare/docker.tar.gz"
+    "$MARATHON_DOCKER_CFG_ARCHIVE_URI"
   ]
 }
 
