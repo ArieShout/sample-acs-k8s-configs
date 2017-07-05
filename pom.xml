@@ -97,6 +97,22 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-swarm-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/swarm</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/swarm</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
