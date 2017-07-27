@@ -5,30 +5,30 @@ items:
 - kind: Service
   apiVersion: v1
   metadata:
-    name: sample-acs-k8s-service
+    name: menxiao-k8s-demo-service
     labels:
-      app: sample-acs-k8s
+      app: menxiao-k8s-demo
   spec:
     type: LoadBalancer
     selector:
-      app: sample-acs-k8s
+      app: menxiao-k8s-demo
     ports:
       - port: 80
         targetPort: 8080
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
-    name: sample-acs-k8s-deployment
+    name: menxiao-k8s-demo-deployment
   spec:
     replicas: 1
     template:
       metadata:
         labels:
-          app: sample-acs-k8s
+          app: menxiao-k8s-demo
       spec:
         containers:
-        - name: sample-acs-k8s-container
-          image: menxiaoacrsea.azurecr.io/sample-acs-k8s:$BUILD_NUMBER
+        - name: menxiao-k8s-demo-container
+          image: menxiaoacrsea.azurecr.io/menxiao-k8s-demo:$BUILD_NUMBER
           ports:
           - containerPort: 8080
         imagePullSecrets:

@@ -7,7 +7,7 @@
   "instances": 1,
   "container": {
     "docker": {
-      "image": "menxiaoacrsea.azurecr.io/sample-acs:$BUILD_NUMBER",
+      "image": "menxiaoacrsea.azurecr.io/menxiao-dcos-demo:$BUILD_NUMBER",
       "network": "BRIDGE",
       "portMappings": [
         {

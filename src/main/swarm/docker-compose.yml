@@ -1,7 +1,7 @@
 version: '2'
 services:
   web:
-    image: menxiaoacrsea.azurecr.io/sample-acs-swarm:$BUILD_NUMBER
+    image: menxiao/menxiao-swarm-demo:$BUILD_NUMBER
     container_name: acs_swarm_deployment
     ports:
     - "80:8080"
