@@ -1,0 +1,34 @@
+#!/usr/bin/env groovy
+
+node {
+    stage("Preparation") {
+        git url: "O:\\git\\sample-acs-k8s-configs.git"
+    }
+
+    stage("Maven Build") {
+        bat 'mvn clean package'
+    }
+
+    stage("Docker build and push") {
+        docker.withRegistry('http://menxiaoacrsea.azurecr.io', 'menxiaoAcrSea') {
+            dir('target/docker') {
+                bat "docker build -t menxiaoacrsea.azurecr.io/menxiao-dcos-demo:%BUILD_NUMBER% ."
+                bat "docker push menxiaoacrsea.azurecr.io/menxiao-dcos-demo:%BUILD_NUMBER%"
+            }
+        }
+    }
+
+    stage('Deploy') {
+        withEnv(['DOCKER_REGISTRY=menxiaoacrsea.azurecr.io']) {
+            acsDeploy azureCredentialsId: '3afa8b4f-65f5-4356-9664-9f81823a0dec',
+                      configFilePaths: 'target/marathon/marathon-app.json',
+                      containerRegistryCredentials: [
+                          [credentialsId: 'menxiaoAcrSea', url: 'http://menxiaoacrsea.azurecr.io']],
+                      containerService: 'menxiao-dcos | DCOS',
+                      dcosDockerCredentialsPath: '/home/azureuser/lifecycle-build-dcos.docker',
+                      enableConfigSubstitution: true,
+                      resourceGroupName: 'menxiao-dcos',
+                      sshCredentialsId: '6d6e70eb-3fa3-43e6-bebc-6f628a913a25'
+        }
+    }
+}
