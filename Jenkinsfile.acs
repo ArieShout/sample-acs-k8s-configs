@@ -1,0 +1,28 @@
+node {
+    stage("Build") {
+        git url: "O:\\git\\sample-acs-k8s-configs.git"
+        bat 'mvn clean package'
+    }
+
+    stage("Docker build and push") {
+        docker.withRegistry('http://menxiaoacrsea.azurecr.io', 'menxiaoAcrSea') {
+            dir('target/docker') {
+                bat "docker build -t menxiaoacrsea.azurecr.io/menxiao-k8s-demo:%BUILD_NUMBER% ."
+                bat "docker push menxiaoacrsea.azurecr.io/menxiao-k8s-demo:%BUILD_NUMBER%"
+            }
+        }
+    }
+
+    stage("Deploy") {
+        withEnv(['DOCKER_REGISTRY=menxiaoacrsea.azurecr.io']) {
+            acsDeploy azureCredentialsId: '3afa8b4f-65f5-4356-9664-9f81823a0dec',
+                      configFilePaths: 'target/kubernetes/configs.yml',
+                      containerRegistryCredentials: [
+                          [credentialsId: 'menxiaoAcrSea', url: 'http://menxiaoacrsea.azurecr.io']],
+                      containerService: 'menxiao-k8s | Kubernetes',
+                      enableConfigSubstitution: true,
+                      resourceGroupName: 'menxiao-k8s',
+                      sshCredentialsId: '6d6e70eb-3fa3-43e6-bebc-6f628a913a25'
+        }
+    }
+}
