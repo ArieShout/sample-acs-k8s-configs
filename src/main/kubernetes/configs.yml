@@ -28,7 +28,7 @@ items:
       spec:
         containers:
         - name: menxiao-k8s-demo-container
-          image: menxiao/menxiao-k8s-demo:$BUILD_NUMBER
+          image: menxiaoacrsea.azurecr.io/menxiao-k8s-demo:$BUILD_NUMBER
           ports:
           - containerPort: 8080
         imagePullSecrets:
