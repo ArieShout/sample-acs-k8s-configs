@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-node {
+node('slave') {
     stage("Preparation") {
         git url: "O:\\git\\sample-acs-k8s-configs.git"
     }
@@ -19,7 +19,7 @@ node {
     }
     stage('Deploy') {
         withEnv(['DOCKER_REGISTRY=menxiaoacrsea.azurecr.io']) {
-            acsDeploy azureCredentialsId: '3afa8b4f-65f5-4356-9664-9f81823a0dec',
+            acsDeploy azureCredentialsId: 'abfa1f9b-f441-4e3d-ba5b-7f10e691deba',
                       configFilePaths: 'target/swarm/docker-compose.yml',
                       containerRegistryCredentials: [
                           [credentialsId: 'menxiaoAcrSea', url: 'http://menxiaoacrsea.azurecr.io']],
