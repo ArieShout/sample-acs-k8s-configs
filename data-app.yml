@@ -1,0 +1,82 @@
+---
+apiVersion: "v1"
+kind: "List"
+items:
+
+  - apiVersion: "v1"
+    kind: "Namespace"
+    metadata:
+      name: dev
+      labels:
+        name: dev
+
+  - apiVersion: "extensions/v1beta1"
+    kind: "Deployment"
+    metadata:
+      name: "data-app"
+      namespace: dev
+      labels:
+        name: "data-app"
+    spec:
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            name: "data-app"
+        spec:
+          containers:
+            - name: "data-app"
+              image: "4dhokvjrxl7mwacr.azurecr.io/data-app:latest"
+              ports:
+                - containerPort: 8090
+              resources:
+                limits:
+                  cpu: 1
+                  memory: 4Gi
+                requests:
+                  cpu: 1
+                  memory: 2Gi
+              env:
+                - name: MYSQL_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: my-secrets
+                      key: mysqlUsername
+                - name: MYSQL_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: my-secrets
+                      key: mysqlPassword
+                - name: MYSQL_ENDPOINT
+                  valueFrom:
+                    secretKeyRef:
+                      name: my-secrets
+                      key: mysqlEndpoint
+                - name: DATA_APP_CONTAINER_PORT
+                  value: "8090"
+              livenessProbe:
+                httpGet:
+                  path: /api/v1
+                  port: 8090
+                initialDelaySeconds: 60
+                timeoutSeconds: 5
+          imagePullSecrets:
+            - name: 4dhokvjrxl7mwacr.azurecr.io
+          securityContext:
+            fsGroup: 1000
+
+  - apiVersion: "v1"
+    kind: "Service"
+    metadata:
+      name: "data-app"
+      namespace: dev
+    spec:
+      type: "LoadBalancer"
+      selector:
+        name: "data-app"
+      ports:
+        -
+          name: "http"
+          port: 80
+          targetPort: 8090
+          protocol: "TCP"
