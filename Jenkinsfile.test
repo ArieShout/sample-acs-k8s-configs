@@ -1,0 +1,9 @@
+node {
+    stage('SCM') {
+        checkout scm
+    }
+
+    stage('Build') {
+        sh '''cat pom.xml'''
+    }
+}
